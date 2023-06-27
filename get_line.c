@@ -23,7 +23,7 @@ ssize_t buffer_input(info_t *info, char **buf, size_t *len)
 #if USE_GETLINE
 		bytesRead = getline(buf, &len_p, stdin);
 #else
-		bytesRead = custom_getline(info, buf, &len_p);
+		bytesRead = _getline(info, buf, &len_p);
 #endif
 		if (bytesRead > 0)
 		{
@@ -123,7 +123,7 @@ ssize_t read_buffer(info_t *info, char *buf, size_t *i)
  * Return: size
  */
 
-int custom_getline(info_t *info, char **ptr, size_t *length)
+int _getline(info_t *info, char **ptr, size_t *length)
 {
 	static char buf[READ_BUFFER_SIZE];
 	static size_t i, len;
