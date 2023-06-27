@@ -42,13 +42,13 @@ int err_atoi(char *str)
 
 void print_error(info_t *info, char *error_string)
 {
-	_eputs(info->file_name);
-	_eputs(": ");
+	_errputs(info->file_name);
+	_errputs(": ");
 	print_decimal(info->line_count, STDERR_FILENO);
-	_eputs(": ");
-	_eputs(info->argv[0]);
-	_eputs(": ");
-	_eputs(error_string);
+	_errputs(": ");
+	_errputs(info->argv[0]);
+	_errputs(": ");
+	_errputs(error_string);
 }
 
 /**
@@ -93,7 +93,7 @@ int print_decimal(int input, int fd)
 }
 
 /**
- * convert_number_to_string - converts a number to a string
+ * convert_number - this converts a number to a string
  *
  * @num: number
  * @base: base
@@ -102,7 +102,7 @@ int print_decimal(int input, int fd)
  * Return: string representation of the number
  */
 
-char *convert_number_to_string(long int num, int base, int flags)
+char *convert_number(long int num, int base, int flags)
 {
 	static char *array;
 	static char buffer[50];
@@ -130,14 +130,14 @@ char *convert_number_to_string(long int num, int base, int flags)
 }
 
 /**
- * remove_comments_from_string - replaces first instance of '#' with '\0'
+ * remove_comments - this replaces first instance of '#' with '\0'
  *
  * @str: address of the string to modify
  *
  * Return: void
  */
 
-void remove_comments_from_string(char *str)
+void remove_comments(char *str)
 {
 	int i;
 
