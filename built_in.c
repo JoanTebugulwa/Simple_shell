@@ -16,7 +16,7 @@ int exit_shell(info_t *info)
 
 	if (info->args[1])
 	{
-		exit_status = str_to_int(info->args[1]);
+		exit_status = err_atoi(info->args[1]);
 		if (exit_status == -1)
 		{
 			info->status = 2;
@@ -25,7 +25,7 @@ int exit_shell(info_t *info)
 			_errputchar('\n');
 			return (1);
 		}
-		info->err_num = str_to_int(info->args[1]);
+		info->err_num = err_atoi(info->args[1]);
 		return (-2);
 	}
 

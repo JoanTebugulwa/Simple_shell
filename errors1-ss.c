@@ -32,7 +32,7 @@ int err_atoi(char *str)
 }
 
 /**
- * print_error_message - prints an error message
+ * print_error - prints an error message
  *
  * @info: the parameter and return info struct
  * @error_string: string containing specified error type
@@ -40,7 +40,7 @@ int err_atoi(char *str)
  * Return: void
  */
 
-void print_error_message(info_t *info, char *error_string)
+void print_error(info_t *info, char *error_string)
 {
 	_eputs(info->file_name);
 	_eputs(": ");
