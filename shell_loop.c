@@ -141,7 +141,7 @@ void fork_cmd(info_t *info)
 	if (child_pid == -1)
 	{
 		perror("Error:");
-		(return);
+		return;
 	}
 
 	if (child_pid == 0)

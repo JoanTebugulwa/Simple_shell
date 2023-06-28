@@ -137,9 +137,9 @@ char *starts_with(const char *, const char *);
 char *_strcat(char *, char *);
 
 /* team_us_string1.c */
-char *_strcpy(char *, char *);
+char *_strcpy(char *dest, const char *src);
 char *_strdup(const char *);
-void _puts(char *);
+void _puts(const char *str);
 int _putchar(char);
 
 /* team_us_exits.c */

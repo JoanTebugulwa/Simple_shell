@@ -6,7 +6,7 @@
  * Return: returns nothing
  */
 
-int main(void)
+int maint (void)
 {
 	printf("Shell started\n");
 	return (0);
