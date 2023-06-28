@@ -56,8 +56,8 @@ int find_builtin(info_t *info)
 {
 	int i, built_in_ret = -1;
 	builtin_table builtintbl[] = {
-		/* {"exit", _myexit}, */
-			{"env", _myenv},
+	       	{"exit", _myexit},
+		{"env", _myenv},
 			{"help", _myhelp},
 			{"history", _myhistory},
 			{"setenv", _mysetenv},
@@ -107,8 +107,8 @@ void find_cmd(info_t *info)
 	if (!k)
 		return;
 
-	path = NULL; /* find_path(info, _getenv(info, "PATH="), info->argv[0]); */
-	if (path)
+	path = find_path(info, _getenv(info, "PATH="), info->argv[0]);
+		if (path)
 	{
 		info->path = path;
 		fork_cmd(info);
