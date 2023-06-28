@@ -1,27 +1,25 @@
 #include "shell.h"
 
 /**
- * err_atoi - converts a string to an integer
+ * _erratoi - Converts a string to an integer.
+ * @s: The string to be converted.
  *
- * @str: the string to be converted
- *
- * Return: 0 if no numbers in string, converted number otherwise
- *       -1 on error
+ * Return: 0 if no numbers in string, converted number otherwise.
+ *         -1 on error.
  */
-
-int err_atoi(char *str)
+int _erratoi(char *s)
 {
 	int i = 0;
 	unsigned long int result = 0;
 
-	if (*str == '+')
-		str++;
-	for (i = 0; str[i] != '\0'; i++)
+	if (*s == '+')
+		s++;  /* TODO: why does this make main return 255? */
+	for (i = 0; s[i] != '\0'; i++)
 	{
-		if (str[i] >= '0' && str[i] <= '9')
+		if (s[i] >= '0' && s[i] <= '9')
 		{
 			result *= 10;
-			result += (str[i] - '0');
+			result += (s[i] - '0');
 			if (result > INT_MAX)
 				return (-1);
 		}
@@ -32,76 +30,70 @@ int err_atoi(char *str)
 }
 
 /**
- * print_error - prints an error message
+ * print_error - Prints an error message.
+ * @info: The parameter & return info struct.
+ * @estr: String containing specified error type.
  *
- * @info: the parameter and return info struct
- * @error_string: string containing specified error type
- *
- * Return: void
+ * Return: void.
  */
-
-void print_error(info_t *info, char *error_string)
+void print_error(info_t *info, char *estr)
 {
-	_errputs(info->file_name);
-	_errputs(": ");
-	print_decimal(info->line_count, STDERR_FILENO);
-	_errputs(": ");
-	_errputs(info->argv[0]);
-	_errputs(": ");
-	_errputs(error_string);
+	_eputs(info->fname);
+	_eputs(": ");
+	print_d(info->line_count, STDERR_FILENO);
+	_eputs(": ");
+	_eputs(info->argv[0]);
+	_eputs(": ");
+	_eputs(estr);
 }
 
 /**
- * print_decimal - prints a decimal (integer) number (base 10)
+ * print_d - Function prints a decimal (integer) number (base 10).
+ * @input: The input.
+ * @fd: The file descriptor to write to.
  *
- * @input: the input
- * @fd: the file descriptor to write to
- *
- * Return: number of characters printed
+ * Return: Number of characters printed.
  */
-
-int print_decimal(int input, int fd)
+int print_d(int input, int fd)
 {
-	int (*_putchar_func)(char) = _putchar;
+	int (*__putchar)(char) = _putchar;
 	int i, count = 0;
-	unsigned int absolute_value, current;
+	unsigned int _abs_, current;
 
 	if (fd == STDERR_FILENO)
-		_putchar_func = _eputchar;
+		__putchar = _eputchar;
 	if (input < 0)
 	{
-		absolute_value = -input;
-		_putchar_func('-');
+		_abs_ = -input;
+		__putchar('-');
 		count++;
 	}
 	else
-		absolute_value = input;
-	current = absolute_value;
+		_abs_ = input;
+	current = _abs_;
 	for (i = 1000000000; i > 1; i /= 10)
 	{
-		if (absolute_value / i)
+		if (_abs_ / i)
 		{
-			_putchar_func('0' + current / i);
+			__putchar('0' + current / i);
 			count++;
 		}
 		current %= i;
 	}
-	_putchar_func('0' + current);
+	__putchar('0' + current);
 	count++;
 
 	return (count);
 }
 
 /**
- * convert_number - this converts a number to a string
+ * convert_number - Converter function, a clone of itoa.
+ * @num: Number.
+ * @base: Base.
+ * @flags: Argument flags.
  *
- * @num: number
- * @base: base
- * @flags: argument flags
- *
- * Return: string representation of the number
+ * Return: String.
  */
-
 char *convert_number(long int num, int base, int flags)
 {
 	static char *array;
@@ -130,21 +122,19 @@ char *convert_number(long int num, int base, int flags)
 }
 
 /**
- * remove_comments - this replaces first instance of '#' with '\0'
+ * remove_comments - Function replaces the first instance of '#' with '\0'.
+ * @buf: Address of the string to modify.
  *
- * @str: address of the string to modify
- *
- * Return: void
+ * Return: void.
  */
-
-void remove_comments(char *str)
+void remove_comments(char *buf)
 {
 	int i;
 
-	for (i = 0; str[i] != '\0'; i++)
-		if (str[i] == '#' && (!i || str[i - 1] == ''))
+	for (i = 0; buf[i] != '\0'; i++)
+		if (buf[i] == '#' && (!i || buf[i - 1] == ' '))
 		{
-			str[i] = '\0';
+			buf[i] = '\0';
 			break;
 		}
 }
